@@ -18,7 +18,7 @@ clear, executive-ready dashboards using **Power BI & Microsoft Fabric**.
 ---
 
 ## 🧩 Featured Portfolio
-👉 **[Power BI Portfolio](https://github.com/bhaveshukani/powerbi-portfolio)**
+👉 **https://ukanibhavesh00.github.io/bhaveshukani.github.io/**
 
 ---
 
