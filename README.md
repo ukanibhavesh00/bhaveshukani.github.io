@@ -1,45 +1,33 @@
-# Bhavesh Ukani — Portfolio
+# 👋 Hi, I'm Bhavesh Ukani
 
-A responsive single-page Power BI / Data Analytics portfolio built with:
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Google Fonts
-- GitHub Pages-ready static hosting
+🚀 Power BI & Microsoft Fabric Developer | PL-300 Certified  
+📍 UK | Available for Freelance & Contract Work  
 
-## Folder structure
+I help **finance, operations, and analytics teams** transform complex data into
+clear, executive-ready dashboards using **Power BI & Microsoft Fabric**.
 
-bhavesh-portfolio/
-├── index.html
-├── style.css
-├── script.js
-├── README.md
-└── assets/
-    ├── Bhavesh_Ukani_CV.pdf   <-- add your CV here
-    └── profile.jpg             <-- optional profile photo
+---
 
-## Before publishing
+## 🧠 What I Do
+- 📊 Power BI Dashboards & Reporting
+- 🧮 Advanced DAX & Data Modeling
+- ⚡ Performance Optimization
+- 🏗 Microsoft Fabric (Lakehouse, Semantic Models)
+- 🔗 API & SQL Data Integration
 
-1. Add your CV as `assets/Bhavesh_Ukani_CV.pdf`.
-3. Replace `#` LinkedIn/GitHub links with your real profile URLs.
-4. Replace the certificate link.
-5. Review all project wording and remove any confidential/company-specific information before publishing.
-6. Update email/location if needed.
+---
 
-## Run locally
+## 🧩 Featured Portfolio
+👉 **[Power BI Portfolio](https://github.com/bhaveshukani/powerbi-portfolio)**
 
-Open `index.html` directly in a browser, or use VS Code Live Server.
+---
 
-## Publish with GitHub Pages
+## 🛠 Tech Stack
+Power BI • Microsoft Fabric • DAX • Power Query  
+SQL Server • Azure SQL • Power Automate • Excel  
 
-1. Create a GitHub repository, e.g. `bhavesh-portfolio`.
-2. Upload `index.html`, `style.css`, `script.js`, `README.md`, and `assets`.
-3. GitHub → Settings → Pages.
-4. Source: Deploy from branch.
-5. Branch: `main`, folder: `/root`.
-6. Save.
-7. Your site will be available at your GitHub Pages URL.
+---
 
-## Custom domain
-
-You can later connect a domain such as `bhaveshukani.com` through GitHub Pages settings.
+## 📬 Contact
+📧 Email: ukanibhavesh00@email.com  
+💼 LinkedIn: https://linkedin.com/in/bhaveshukani
