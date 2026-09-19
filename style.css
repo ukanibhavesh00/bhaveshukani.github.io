@@ -110,3 +110,9 @@ dialog .tags{margin:0 0 6px}
   section.wrap{padding-top:64px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.rows small{display:block;font:400 14px "DM Sans",sans-serif;color:var(--muted);margin-top:4px}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.shot{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-bottom:8px}
+.embed{width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:#fff}
+dialog .load{margin-bottom:6px}
