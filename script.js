@@ -1,22 +1,105 @@
-const drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay');
-const openNav=()=>{drawer.classList.add('open');overlay.classList.add('open')};const closeNav=()=>{drawer.classList.remove('open');overlay.classList.remove('open')};
-document.getElementById('navToggle').onclick=openNav;document.getElementById('navClose').onclick=closeNav;overlay.onclick=closeNav;document.querySelectorAll('.drawer nav a').forEach(a=>a.onclick=closeNav);
-const data={
-commercial:['PROFESSIONAL · COMMERCIAL','Commercial KPI & Revenue Reporting',['Power BI','DAX','Power Query','Dataverse'],`<h3>Business problem</h3><p>Commercial stakeholders need a consistent view of revenue, quotes, client activity, win performance and delivery KPIs.</p><h3>Approach</h3><ul><li>Combined business-system data into a reporting model.</li><li>Developed KPI logic and time-based views for quotes, transits, revenue and commercial performance.</li><li>Designed executive-friendly pages with drilldowns for client and operational detail.</li><li>Focused on report performance, usability and consistent definitions.</li></ul>`],
-operations:['PROFESSIONAL · OPERATIONS','Operations Performance Reporting',['Power BI','DAX','SQL','Dataverse'],`<h3>Business problem</h3><p>Operational teams need fast visibility of current workload, task status, performance and regional trends.</p><h3>Approach</h3><ul><li>Modelled operational data into reusable measures and report views.</li><li>Created status, workload and trend reporting.</li><li>Used filtering and drill-through to move from overview to detail.</li><li>Reviewed report health and data quality issues.</li></ul>`],
-email:['PROFESSIONAL · AUTOMATION','Commercial Email Response KPI',['Exchange Online','Power Automate','Power BI'],`<h3>Business problem</h3><p>Measure how quickly a commercial mailbox responds to new enquiries while excluding irrelevant CC traffic and subsequent replies.</p><h3>Approach</h3><ul><li>Use Exchange Online email metadata for sent and received events.</li><li>Use Power Automate to capture conversation-level information and establish the first qualifying response.</li><li>Exclude CC-only messages, later replies and unrelated messages using business rules.</li><li>Surface response-time distributions and SLA-style KPIs in Power BI.</li></ul><h3>Key design principle</h3><p>The definition of the first response matters as much as the calculation itself.</p>`],
-maritime:['PROFESSIONAL · ANONYMISED','Vessel & Maritime Operations Intelligence',['Power BI','APIs','DAX','Dataverse'],`<h3>Business problem</h3><p>Maritime reporting can require combining operational records with vessel master data, status and API-derived information.</p><h3>Approach</h3><ul><li>Use IMO / vessel identifiers to relate operational activity to vessel information.</li><li>Combine business data with API responses where appropriate.</li><li>Surface vessel type, status, activity and location-oriented context.</li><li>Design operational pages from fleet-level to individual records.</li></ul><p>This case study is intentionally anonymised.</p>`],
-cable:['PROFESSIONAL · INFRASTRUCTURE','Subsea Cable Reporting',['Power BI','Data Modelling','KPIs'],`<h3>Purpose</h3><p>Provide client-level visibility for subsea cable activity and related operational alerts.</p><h3>Approach</h3><ul><li>Organise reporting around client, activity and alert dimensions.</li><li>Create consistent KPI views and time-based trends.</li><li>Use filtering and drilldown for management and operational users.</li></ul>`],
-state:['PROFESSIONAL · OPERATIONS','Operations Stateboard & Daily Numbers',['Power BI','Dataverse','DAX'],`<h3>Purpose</h3><p>Operational teams need current-state visibility rather than waiting for periodic reports.</p><h3>Approach</h3><ul><li>Represent states such as Live, Pending, Cancelled and Completed.</li><li>Provide daily operational numbers and workload context.</li><li>Use Dataverse-backed reporting patterns where applicable.</li></ul>`],
-forecast:['PROFESSIONAL · RESOURCE PLANNING','Guards Forecast & Resource Reporting',['Power BI','DAX','Forecasting'],`<h3>Purpose</h3><p>Resource planning benefits from combining current availability with expected operational demand.</p><h3>Approach</h3><ul><li>Build views for available and deployed resource.</li><li>Compare current position with expected workload and forecast demand.</li><li>Present regional / IOR trends to support planning discussions.</li></ul>`],
-sales:['INDEPENDENT · PORTFOLIO','Sales Performance Dashboard',['SQL','Power BI','DAX'],`<h3>Purpose</h3><p>A reusable portfolio project demonstrating a complete sales analytics workflow.</p><h3>Scope</h3><ul><li>Revenue and target performance.</li><li>Conversion / win analysis.</li><li>Customer and product rankings.</li><li>Month-over-month and year-over-year trends.</li><li>Interactive segmentation and drilldowns.</li></ul>`],
-churn:['INDEPENDENT · ADVANCED ANALYTICS','Customer Churn Prediction',['Python','Pandas','scikit-learn','Power BI'],`<h3>Purpose</h3><p>An advanced portfolio concept showing how predictive analytics can sit alongside a BI reporting layer.</p><h3>Approach</h3><ul><li>Profile and clean customer-level data with Python.</li><li>Create behavioural features for modelling.</li><li>Train and evaluate a classification model using scikit-learn.</li><li>Expose risk scores and segment-level insights through Power BI.</li></ul><h3>Architecture</h3><p>Python → feature engineering → ML model → scored dataset → Power BI decision layer.</p>`],
-ecommerce:['INDEPENDENT · MARKET INTELLIGENCE','E-commerce Market Research Analytics',['Python','ETL','Power BI'],`<h3>Purpose</h3><p>An independent concept for understanding public e-commerce listing data in the Indian market.</p><h3>Potential analysis</h3><ul><li>Category and product distribution.</li><li>Price bands and discount patterns.</li><li>Brand / seller comparisons where available.</li><li>Rating and review signals.</li><li>Historical trend analysis after repeat collection.</li></ul><p>Only use data collected in accordance with the relevant website terms and applicable law.</p>`],
-retail:['INDEPENDENT · POWER BI','Retail Sales & Executive BI Dashboard',['Power BI','Power Query','DAX'],`<h3>Purpose</h3><p>Demonstrate a polished executive dashboard built around a clean star schema.</p><h3>Features</h3><ul><li>Executive KPI overview.</li><li>Revenue and margin trends.</li><li>Product / category performance.</li><li>Customer segmentation.</li><li>Drill-through to transaction-level context.</li></ul>`],
-academic:['ACADEMIC · DATA ANALYTICS','Predictive Analytics & Data Science Portfolio',['Python','Statistics','Machine Learning'],`<h3>Scope</h3><p>Academic and continuous-learning work across Python analytics, predictive modelling, optimisation and data storytelling.</p><h3>Focus</h3><ul><li>Data cleaning and exploratory analysis.</li><li>Feature engineering and model evaluation.</li><li>Predictive modelling and optimisation concepts.</li><li>Communicating technical results to non-technical audiences.</li></ul>`]};
-const modal=document.getElementById('modal');
-function show(k){const p=data[k];document.getElementById('modalKicker').textContent=p[0];document.getElementById('modalTitle').textContent=p[1];document.getElementById('modalTags').innerHTML=p[2].map(x=>`<span>${x}</span>`).join('');document.getElementById('modalBody').innerHTML=p[3];modal.classList.add('open');document.body.style.overflow='hidden'}
-function hide(){modal.classList.remove('open');document.body.style.overflow=''}
-document.querySelectorAll('.case').forEach(b=>b.onclick=()=>show(b.dataset.project));document.getElementById('modalClose').onclick=hide;document.querySelector('.modal-bg').onclick=hide;document.addEventListener('keydown',e=>e.key==='Escape'&&hide());
-document.querySelectorAll('.filters button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.project').forEach(c=>c.classList.toggle('hide',f!=='all'&&c.dataset.cat!==f))});
-document.getElementById('contactForm').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);const s=encodeURIComponent(`Portfolio enquiry: ${d.get('type')||'General'}`);const b=encodeURIComponent(`Name: ${d.get('name')}\nEmail: ${d.get('email')}\nType: ${d.get('type')||'Not specified'}\n\n${d.get('message')}`);location.href=`mailto:bhavesh.ukani@gmail.com?subject=${s}&body=${b}`;document.getElementById('formNote').textContent='Your email app should open with the message prepared.'};
+const $ = (s) => document.querySelector(s);
+
+/* Project content is carried over from the v2 portfolio. Edit here; cards and modal render from this list. */
+const projects = [
+  { cat: "Professional", title: "Commercial KPI and revenue reporting", blurb: "One reporting model for revenue, quotes, client activity and delivery KPIs.",
+    tags: ["Power BI", "DAX", "Power Query", "Dataverse"],
+    problem: "Commercial stakeholders needed one consistent view of revenue, quotes, client activity, win performance and delivery KPIs.",
+    points: ["Combined business-system data into a single reporting model.", "Built KPI logic and time-based views for quotes, transits, revenue and commercial performance.", "Designed executive pages with drill-downs to client and operational detail.", "Kept report performance and metric definitions consistent."] },
+  { cat: "Professional", title: "Operations performance reporting", blurb: "Workload, task status and regional trends, from overview to detail.",
+    tags: ["Power BI", "DAX", "SQL", "Dataverse"],
+    problem: "Operational teams needed fast visibility of current workload, task status, performance and regional trends.",
+    points: ["Modelled operational data into reusable measures and report views.", "Created status, workload and trend reporting.", "Used filtering and drill-through to move from overview to detail.", "Reviewed report health and data quality issues."] },
+  { cat: "Professional", title: "Commercial email response KPI", blurb: "Measures how quickly a shared mailbox first responds to new enquiries.",
+    tags: ["Exchange Online", "Power Automate", "Power BI"],
+    problem: "Measure response time to new enquiries while excluding CC-only traffic and later replies.",
+    points: ["Used Exchange Online metadata for sent and received events.", "Used Power Automate to capture conversation-level data and find the first qualifying response.", "Applied business rules to exclude CC-only, follow-up and unrelated messages.", "Showed response-time distributions and SLA-style KPIs in Power BI."],
+    note: "The definition of the first response matters as much as the calculation itself." },
+  { cat: "Professional", title: "Vessel and maritime operations intelligence", blurb: "Operational records joined to vessel master data and API information.",
+    tags: ["Power BI", "APIs", "DAX", "Dataverse"],
+    problem: "Maritime reporting needed operational records combined with vessel master data, status and API-derived information.",
+    points: ["Related activity to vessel information using IMO identifiers.", "Combined business data with API responses where appropriate.", "Surfaced vessel type, status, activity and location context.", "Designed pages from fleet level down to individual records."],
+    note: "This case study is anonymised." },
+  { cat: "Professional", title: "Operations stateboard and daily numbers", blurb: "Current-state visibility instead of waiting for periodic reports.",
+    tags: ["Power BI", "Dataverse", "DAX"],
+    problem: "Operational teams needed to see the current state of work without waiting for periodic reports.",
+    points: ["Represented states such as Live, Pending, Cancelled and Completed.", "Provided daily operational numbers and workload context.", "Used Dataverse-backed reporting patterns."] },
+  { cat: "Professional", title: "Subsea cable and resource forecast reporting", blurb: "Client-level cable activity, plus available versus expected resource demand.",
+    tags: ["Power BI", "Data modelling", "Forecasting"],
+    problem: "Teams needed client-level visibility of cable activity and alerts, and a way to compare available resource with expected demand.",
+    points: ["Organised reporting around client, activity and alert dimensions.", "Compared current resource position with forecast workload.", "Presented regional trends to support planning discussions."] },
+  { cat: "Independent", title: "Sales performance dashboard", blurb: "A complete sales analytics workflow, from SQL to interactive Power BI.",
+    tags: ["SQL", "Power BI", "DAX"],
+    problem: "A reusable portfolio project showing a full sales analytics workflow.",
+    points: ["Revenue and target performance.", "Conversion and win analysis.", "Customer and product rankings.", "Month-on-month and year-on-year trends with interactive segmentation."] },
+  { cat: "Independent", title: "Retail sales and executive BI dashboard", blurb: "Executive KPIs on a clean star schema with drill-through.",
+    tags: ["Power BI", "Power Query", "DAX"],
+    problem: "A polished executive dashboard built around a clean star schema.",
+    points: ["Executive KPI overview.", "Revenue and margin trends.", "Product and category performance.", "Customer segmentation with drill-through to transaction level."] },
+  { cat: "Independent", title: "Customer churn prediction", blurb: "Python model scores customers; Power BI turns scores into decisions.",
+    tags: ["Python", "pandas", "scikit-learn", "Power BI"],
+    problem: "Show how predictive analytics can sit alongside a BI reporting layer.",
+    points: ["Profiled and cleaned customer data with Python.", "Created behavioural features for modelling.", "Trained and evaluated a classification model with scikit-learn.", "Exposed risk scores and segment insights in Power BI."],
+    note: "Flow: Python, feature engineering, model, scored dataset, Power BI." },
+  { cat: "Independent", title: "E-commerce market research analytics", blurb: "Category, price band and discount patterns from public listing data.",
+    tags: ["Python", "ETL", "Power BI"],
+    problem: "Understand public e-commerce listing data in the Indian market.",
+    points: ["Category and product distribution.", "Price bands and discount patterns.", "Rating and review signals.", "Historical trends once collection is repeated."],
+    note: "Only data collected in line with site terms and applicable law is used." },
+  { cat: "Academic", title: "Predictive analytics and data science", blurb: "Python analytics, modelling and optimisation coursework.",
+    tags: ["Python", "Statistics", "Machine learning"],
+    problem: "Academic and continuing-learning work across analytics, predictive modelling and optimisation.",
+    points: ["Data cleaning and exploratory analysis.", "Feature engineering and model evaluation.", "Explaining technical results to non-technical audiences."] }
+];
+
+/* Navigation */
+const nav = $("#nav"), menuBtn = $("#menuBtn");
+menuBtn.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open);
+});
+nav.addEventListener("click", (e) => {
+  if (e.target.tagName === "A") { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }
+});
+
+/* Project cards */
+const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const grid = $("#projects");
+grid.innerHTML = projects.map((p, i) =>
+  `<button class="card" data-i="${i}" data-cat="${p.cat}">
+     <span class="kicker">${p.cat}</span><h3>${esc(p.title)}</h3><p>${esc(p.blurb)}</p>
+     <span class="tags">${p.tags.slice(0, 3).map((t) => `<span>${esc(t)}</span>`).join("")}</span>
+   </button>`).join("");
+
+document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".filters button").forEach((x) => x.classList.remove("on"));
+  b.classList.add("on");
+  grid.querySelectorAll(".card").forEach((c) => { c.hidden = b.dataset.f !== "all" && c.dataset.cat !== b.dataset.f; });
+}));
+
+/* Modal */
+const modal = $("#modal");
+grid.addEventListener("click", (e) => {
+  const c = e.target.closest(".card"); if (!c) return;
+  const p = projects[c.dataset.i];
+  $("#mKicker").textContent = p.cat;
+  $("#mTitle").textContent = p.title;
+  $("#mTags").innerHTML = p.tags.map((t) => `<span>${esc(t)}</span>`).join("");
+  $("#mBody").innerHTML = `<h4>The problem</h4><p>${esc(p.problem)}</p><h4>What I did</h4><ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${p.note ? `<h4>Note</h4><p>${esc(p.note)}</p>` : ""}`;
+  modal.showModal();
+});
+$("#mClose").addEventListener("click", () => modal.close());
+modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); });
+
+/* Contact form: opens a prepared email. Swap for Formspree/Netlify Forms if you want direct submissions. */
+$("#contactForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const d = new FormData(e.target);
+  const subject = encodeURIComponent(`Project enquiry: ${d.get("type")}`);
+  const body = encodeURIComponent(`Name: ${d.get("name")}\nEmail: ${d.get("email")}\nType: ${d.get("type")}\n\n${d.get("message")}`);
+  location.href = `mailto:bhavesh.ukani@gmail.com?subject=${subject}&body=${body}`;
+  $("#formNote").textContent = "Your email app should open with the message ready to send.";
+});
+
+$("#yr").textContent = new Date().getFullYear();
+document.querySelectorAll(".mock-bars i").forEach((el, i) => el.style.setProperty("--n", i));
