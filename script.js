@@ -9,7 +9,7 @@ const projects = [
   { cat: "Professional", title: "Operations performance reporting", blurb: "Workload, task status and regional trends, from overview to detail.",
     tags: ["Power BI", "DAX", "SQL", "Dataverse"],
     problem: "Operational teams needed fast visibility of current workload, task status, performance and regional trends.",
-    points: ["Modelled operational data into reusable measures and report views.", "Created status, workload and trend reporting.", "Used filtering and drill-through to move from overview to detail.", "Reviewed report health and data quality issues."] },
+    points: ["Modelled operational data into reusable measures and report views.", "Created status, workload and trend reporting.", "Used filtering and drill-through to move from overview to detail.", "Reviewed report health and data quality issues.", "Led compliance and maritime reporting, reducing overdue tasks by 25%."] },
   { cat: "Professional", title: "Commercial email response KPI", blurb: "Measures how quickly a shared mailbox first responds to new enquiries.",
     tags: ["Exchange Online", "Power Automate", "Power BI"],
     problem: "Measure response time to new enquiries while excluding CC-only traffic and later replies.",
@@ -24,10 +24,14 @@ const projects = [
     tags: ["Power BI", "Dataverse", "DAX"],
     problem: "Operational teams needed to see the current state of work without waiting for periodic reports.",
     points: ["Represented states such as Live, Pending, Cancelled and Completed.", "Provided daily operational numbers and workload context.", "Used Dataverse-backed reporting patterns."] },
-  { cat: "Professional", title: "Subsea cable and resource forecast reporting", blurb: "Client-level cable activity, plus available versus expected resource demand.",
-    tags: ["Power BI", "Data modelling", "Forecasting"],
-    problem: "Teams needed client-level visibility of cable activity and alerts, and a way to compare available resource with expected demand.",
-    points: ["Organised reporting around client, activity and alert dimensions.", "Compared current resource position with forecast workload.", "Presented regional trends to support planning discussions."] },
+  { cat: "Professional", title: "Guard utilisation dashboard", blurb: "Automated daily deployment tracking, lifting utilisation from 60-65% to 75%.",
+    tags: ["Power BI", "Power Query", "DAX", "Forecasting"],
+    problem: "Vessel security teams tracked guard deployment manually, which made high utilisation hard to maintain.",
+    points: ["Combined internal databases and partner records in one Power BI model.", "Used Power Query for ETL and DAX for daily deployments, fixed posts, guards in transit, training status and partner guards.", "Added a 7-day forecast to support resource planning.", "Utilisation rose from an average of 60-65% with the manual process to 75% after automation."] },
+  { cat: "Professional", title: "Financial performance dashboard", blurb: "Revenue, cost and variance reporting that cut manual effort by 27%.",
+    tags: ["Power BI", "SQL", "Excel", "DAX"],
+    problem: "Finance needed clearer visibility of revenue, cost trends and variance, and manual reporting took too long.",
+    points: ["Reviewed existing KPIs with finance stakeholders, found gaps and added measures aligned to business goals.", "Connected SQL databases and Excel data, with Power Query for ETL.", "Built DAX calculations for accurate, interactive financial reports.", "Reduced manual reporting time by 27%."] },
   { cat: "Independent", title: "Sales performance dashboard", blurb: "A complete sales analytics workflow, from SQL to interactive Power BI.",
     tags: ["SQL", "Power BI", "DAX"],
     problem: "A reusable portfolio project showing a full sales analytics workflow.",
@@ -46,10 +50,10 @@ const projects = [
     problem: "Understand public e-commerce listing data in the Indian market.",
     points: ["Category and product distribution.", "Price bands and discount patterns.", "Rating and review signals.", "Historical trends once collection is repeated."],
     note: "Only data collected in line with site terms and applicable law is used." },
-  { cat: "Academic", title: "Predictive analytics and data science", blurb: "Python analytics, modelling and optimisation coursework.",
-    tags: ["Python", "Statistics", "Machine learning"],
-    problem: "Academic and continuing-learning work across analytics, predictive modelling and optimisation.",
-    points: ["Data cleaning and exploratory analysis.", "Feature engineering and model evaluation.", "Explaining technical results to non-technical audiences."] }
+  { cat: "Academic", title: "Botnet detection with federated learning", blurb: "MSc dissertation: deep-learning detection with data kept on-device.",
+    tags: ["Python", "Deep learning", "Federated learning"],
+    problem: "Detect botnets on decentralised edge devices without centralising data, to protect privacy.",
+    points: ["Trained models across multiple devices using federated learning.", "Achieved a detection accuracy of 96%."] }
 ];
 
 /* Navigation */
@@ -67,7 +71,7 @@ const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">"
 const grid = $("#projects");
 grid.innerHTML = projects.map((p, i) =>
   `<button class="card" data-i="${i}" data-cat="${p.cat}">
-     <span class="kicker">${p.cat}</span><h3>${esc(p.title)}</h3><p>${esc(p.blurb)}</p>
+     ${p.image ? `<img class="thumb" src="${esc(p.image)}" alt="" loading="lazy">` : ""}<span class="kicker">${p.cat}</span><h3>${esc(p.title)}</h3><p>${esc(p.blurb)}</p>
      <span class="tags">${p.tags.slice(0, 3).map((t) => `<span>${esc(t)}</span>`).join("")}</span>
    </button>`).join("");
 
@@ -79,13 +83,21 @@ document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("
 
 /* Modal */
 const modal = $("#modal");
+const media = (p) => (p.image ? `<img class="shot" src="${esc(p.image)}" alt="${esc(p.title)} dashboard screenshot">` : "") +
+  (p.embed ? `<button class="btn ghost load" data-src="${esc(p.embed)}">Load interactive report</button>` : "");
+$("#mBody").addEventListener("click", (e) => {
+  const b = e.target.closest(".load"); if (!b) return;
+  const f = document.createElement("iframe");
+  f.className = "embed"; f.title = "Interactive Power BI report"; f.allowFullscreen = true; f.src = b.dataset.src;
+  b.replaceWith(f);
+});
 grid.addEventListener("click", (e) => {
   const c = e.target.closest(".card"); if (!c) return;
   const p = projects[c.dataset.i];
   $("#mKicker").textContent = p.cat;
   $("#mTitle").textContent = p.title;
   $("#mTags").innerHTML = p.tags.map((t) => `<span>${esc(t)}</span>`).join("");
-  $("#mBody").innerHTML = `<h4>The problem</h4><p>${esc(p.problem)}</p><h4>What I did</h4><ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${p.note ? `<h4>Note</h4><p>${esc(p.note)}</p>` : ""}`;
+  $("#mBody").innerHTML = media(p) + `<h4>The problem</h4><p>${esc(p.problem)}</p><h4>What I did</h4><ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>${p.note ? `<h4>Note</h4><p>${esc(p.note)}</p>` : ""}`;
   modal.showModal();
 });
 $("#mClose").addEventListener("click", () => modal.close());
@@ -97,7 +109,7 @@ $("#contactForm").addEventListener("submit", (e) => {
   const d = new FormData(e.target);
   const subject = encodeURIComponent(`Project enquiry: ${d.get("type")}`);
   const body = encodeURIComponent(`Name: ${d.get("name")}\nEmail: ${d.get("email")}\nType: ${d.get("type")}\n\n${d.get("message")}`);
-  location.href = `mailto:bhavesh.ukani@gmail.com?subject=${subject}&body=${body}`;
+  location.href = `mailto:ukanibhavesh00@gmail.com?subject=${subject}&body=${body}`;
   $("#formNote").textContent = "Your email app should open with the message ready to send.";
 });
 
